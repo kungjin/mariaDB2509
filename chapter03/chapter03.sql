@@ -49,5 +49,99 @@ SELECT memberName, memberAddress FROM membertbl;
 
 SELECT * FROM memebertbl WHERE memberName = '지운이';
  
+-- drop table testTBL; - 테이블 삭제를 위한 구문(데이터와 구조까지 완전히 삭제) 
+
+-- p64 실습5  인덱스 사용 
+/* 
+한줄 선택 후 Ctrl+F9 하나의 쿼리만 실행 
+커서만 줄에 놓고 Shift+ Ctrl+ F9 하나의 쿼리만 실행
+*/
+
+-- p65 0-2 
+CREATE TABLE indexTBL 
+(first_name VARCHAR(14), last_name VARCHAR(16), hire_date DATE);
+
+INSERT INTO indextbl 
+	SELECT first_name, last_name, hire_date
+	FROM employees.employees
+	LIMIT 500;
+	
+SELECT *FROM indextbl;
+
+-- step1 
+
+SELECT *FROM indextbl WHERE first_name = 'Mary';
+
+EXPLAIN SELECT *FROM indextbl WHERE first_name = 'Mary';
+
+
+-- step2
+
+CREATE INDEX idx_indexTBL_firstname ON indextbl(first_name);
+ 
+SELECT *FROM indextbl WHERE first_name = 'Mary';
+
+EXPLAIN SELECT *FROM indextbl WHERE first_name = 'Mary';
+
+/*
+id → 실행 단계
+
+select_type → 쿼리 유형
+
+table → 대상 테이블
+
+type → 접근 방식 (ALL이면 느림, ref 이상이면 좋음)
+
+possible_keys → 후보 인덱스
+
+key → 실제 사용 인덱스
+
+rows → 예상 탐색 수
+
+Extra → 추가 최적화 정보
+*/
+
+-- p70  뷰 기본사용>> step1
+
+CREATE VIEW uv_memberTBL
+AS
+	SELECT memberName, memberAddress FROM membertbl;
+
+-- step2	
+	SELECT *FROM uv_membertbl;
+
+-- 뷰(View)란?
+-- 가상의 테이블, 실제 데이터는 저장하지 않고
+-- SELECT 쿼리 결과를 이름 붙여 재사용하는 객체
+
+-- 특징
+-- 1) 데이터 복사 없음 → 항상 원본 테이블 실시간 참조
+-- 2) 복잡한 쿼리 단순화 가능
+-- 3) 필요한 컬럼만 노출 → 보안성 ↑
+-- 4) 원본 구조 변경 시에도 외부 접근 일관성 유지
+
+
+-- 스토어드 프로시저 
+-- 실습7 > 동시 조회 
+
+SELECT *FROM membertbl WHERE memberName = '당탕이';
+SELECT *FROM producttbl WHERE productName = '냉장고';
+
+USE exdb;
+
+DELIMITER //
+ CREATE PROCEDURE myProc()
+ BEGIN  
+ 
+SELECT *FROM membertbl WHERE memberName = '당탕이';
+SELECT *FROM producttbl WHERE productName = '냉장고';
+
+END //
+DELIMITER;
+
+CALL myProc();
+
+-- 다시 지웠다가 하기 
+
 
 
