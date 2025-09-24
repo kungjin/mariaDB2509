@@ -1,0 +1,2 @@
+-- GROUP BY 문
+ SELECT COUNT ()
