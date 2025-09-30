@@ -124,24 +124,76 @@ AS
 -- 스토어드 프로시저 
 -- 실습7 > 동시 조회 
 
+DROP PROCEDURE IF EXISTS myProc;
+
 SELECT *FROM membertbl WHERE memberName = '당탕이';
 SELECT *FROM producttbl WHERE productName = '냉장고';
 
 USE exdb;
 
-DELIMITER //
+
  CREATE PROCEDURE myProc()
  BEGIN  
  
 SELECT *FROM membertbl WHERE memberName = '당탕이';
 SELECT *FROM producttbl WHERE productName = '냉장고';
 
-END //
-DELIMITER;
+END ;
+
 
 CALL myProc();
 
--- 다시 지웠다가 하기 
+-- 3.34 트리거 
+INSERT INTO membertbl VALUES ('figure','연아', '경기도 군포시 당정동');
+
+SELECT *FROM membertbl ;
+
+UPDATE membertbl SET memberAddress = '서울 강남구 역삼동'
+WHERE memberName = '연아';
+
+DELETE FROM membertbl
+WHERE memberName = '연아' ;
+
+
+-- step 1
+
+CREATE TABLE deletedMemberTBL(
+	memberID CHAR(8),
+	memberName CHAR(5),
+	memberAddress CHAR(20),
+	deletedDate DATE -- 삭제한 날짜
+);
+
+
+ CREATE TRIGGER trg_deleteMemberTBL -- 트리거 이름
+  	AFTER DELETE -- 삭제후에 작동하게 지정 
+ 	ON membertbl -- 트리거 부착할 테이블 
+ 	FOR EACH ROW -- 각행마다 적용시킴
+ 	 
+ 		-- old 테이블의 내용을 백업 테이블에 삽입 
+ 		INSERT INTO deletedMemberTBL 
+ 		VALUES (OLD.memberID, OLD.memberName, OLD.memberAddress, CURDATE());
+ 		
+ 
+DROP TRIGGER IF EXISTS trg_deleteMemberTBL;
+
+-- step2 
+
+SELECT *FROM membertbl; 
+
+DELETE FROM membertbl WHERE memberName = '당탕이';
+
+SELECT *FROM deletedmembertbl;
+
+
+-- 3.4 데이터베이스 백업 및 관리
+-- 백업과 복원 
+-- 실습 9 
+
+
+
+
+
 
 
 
