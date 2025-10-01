@@ -1,0 +1,5 @@
+INDEX VERSION 1.134+C:\full_stack_8\s08_mariaDB\day_0929\.metadata\.plugins\org.eclipse.jdt.core
+1145830185.index
+1865797976.index
+1186444448.index
+3413270776.index

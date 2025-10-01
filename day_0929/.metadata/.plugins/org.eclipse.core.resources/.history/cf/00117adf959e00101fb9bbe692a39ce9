@@ -1,0 +1,38 @@
+package com.ex;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import com.conn.DBConnection;
+
+public class Ex1 {
+
+
+	public void selectBook() {
+		selectBook();
+	}
+		
+		
+	private void selectUsers() {
+		System.out.println("--- 내뇽");
+		String sql = "";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, id);
+			int rows = pstmt.executeUpdate();
+			System.out.println("-----");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBConnection.close(pstmt, conn);
+		}
+		System.out.println("----레코드 내용 수정 ----");
+
+	}
+}

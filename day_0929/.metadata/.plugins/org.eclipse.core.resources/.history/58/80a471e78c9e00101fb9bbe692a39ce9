@@ -1,0 +1,24 @@
+package com;
+
+import com.ex.Ex1;
+
+public class HRD_Book {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+
+		Ex1 ex1 = new Ex1(); 
+		ex1.selectBook();
+		
+		Ex1 ex2 = new Ex2(); 
+		
+		Ex1 ex3 = new Ex3(); 
+		
+		Ex1 ex4 = new Ex4(); 
+		
+		Ex1 ex5 = new Ex5(); 
+			
+	}
+
+}

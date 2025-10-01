@@ -1,0 +1,13 @@
+package com.ex;
+
+public class Ex1 {
+
+	public void selectBook() {
+	 
+//	    연결
+//		SQL 
+//		출력
+		
+	}
+		
+}
