@@ -71,13 +71,24 @@ GROUP BY m.CustNo, m.CustName
 ORDER BY TotalAmount DESC;
 
 -- 4-2) 가장 구매금액이 높은 회원의 이름과 금액 (동점 시 1명만)
+SELECT m.CustNo, m.CustName, SUM(s.Price) AS TotalAmount 
+FROM ShopMember m
+JOIN Sale s ON s.CustNo = m.CustNo 
+GROUP BY m.CustName
+ORDER BY TotalAmount DESC
+LIMIT 1;  
 
 
 -- (5) 데이터 수정 / 삭제
 -- 5-1) '이순신' 회원의 등급을 A로 수정
+UPDATE ShopMember
+SET Grade = 'A'
+WHERE CustName = '이순신';
 
-
-
+SELECT *FROM shopmember;
 
 -- 5-2) CustNo = 3 회원 삭제 
+DELETE FROM ShopMember
+WHERE CustName = '강감찬'; 
 
+SELECT *FROM shopmember;
